@@ -233,4 +233,3 @@ if st.session_state.confirm_delete:
     if c2.button("Cancel", key="confirm_no"):
         st.session_state.confirm_delete = None
         st.rerun()
-                  st.rerun()

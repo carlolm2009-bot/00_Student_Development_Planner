@@ -97,14 +97,15 @@ if st.session_state.view == "classes":
     header = st.columns([6,1])
     header[0].subheader("Classes")
 
+    if header[1].button("🔍"):
+            st.session_state.show_filters = not st.session_state.show_filters
+    
     if st.session_state.role == "admin":
         if header[1].button("➕"):
             st.session_state.selected_class_id = None
             st.session_state.edit_mode = True
             st.session_state.view = "class"
             st.rerun()
-        if header[1].button("🔍"):
-            st.session_state.show_filters = not st.session_state.show_filters
 
     # ---------- FILTERS ----------
     if st.session_state.show_filters:

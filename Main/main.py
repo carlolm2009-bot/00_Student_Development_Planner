@@ -223,7 +223,7 @@ if st.session_state.view == "class":
     # ---------- STUDENTS ----------
     st.subheader("Students")
 
-    if is_admin and st.session_state.edit_mode:
+    if is_admin and st.session_state.edit_mode and not is_new:
         if st.button("➕ Add Student"):
             st.session_state.confirm_delete = ("add_student", cid)
 
@@ -244,8 +244,17 @@ if st.session_state.confirm_delete:
     with st.container(border=True):
         if t == "add_student":
             name = st.text_input("Student name")
-            if st.button("Add"):
-                q("INSERT INTO students (class_id,name) VALUES (?,?)", (val,name))
+            c1, c2 = st.columns(2)
+
+            if c1.button("Add"):
+                if not name.strip():
+                    st.error("Student name cannot be empty")
+                else:
+                    q("INSERT INTO students (class_id, name) VALUES (?, ?)",(val, name.strip()))
+                    st.session_state.confirm_delete = None
+                    st.rerun()
+
+            if c2.button("Cancel"):
                 st.session_state.confirm_delete = None
                 st.rerun()
 

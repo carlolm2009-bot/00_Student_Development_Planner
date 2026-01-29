@@ -147,22 +147,32 @@ if st.session_state.view == "class":
 
     data = [None]*9 if is_new else q("SELECT * FROM files WHERE id=?", (cid,))[0]
 
-    # ---------- EDIT BUTTON ----------
+    # ---------- TOP BAR ----------
+    top = st.columns([6,1,1])
+    top[0].subheader("New Class" if is_new else "Class: " + (data[1] or ""))
+    
+    # Exit class button
+    if top[2].button("❌ Exit Class"):
+        st.session_state.view = "classes"
+        st.session_state.selected_class_id = None
+        st.session_state.edit_mode = False
+        st.rerun()
+
+    # Edit toggle button for admin (only for existing classes)
     if is_admin and not is_new:
-        if st.button("✏️ Edit class"):
+        if top[1].button("✏️ Edit Class"):
             st.session_state.edit_mode = not st.session_state.edit_mode
             st.rerun()
 
-    # ---------- EDIT FORM ----------
+    # ---------- CLASS DETAILS (EDIT MODE ONLY) ----------
     if is_admin and st.session_state.edit_mode:
-        st.subheader("Class details")
-
+        st.subheader("Class Details")
         name = st.text_input("Name", data[1])
         inst = st.text_input("Instansie", data[2])
         graad = st.text_input("Graad", data[3])
         groep = st.number_input("Groep", 1, 99, value=data[4] or 1)
         vak = st.text_input("Vak", data[5])
-        aan = st.selectbox("Aanlyn", ["Aanlyn", "In Persoon"])
+        aan = st.selectbox("Aanlyn", ["Aanlyn", "In Persoon"], index=0 if data[6]=="Aanlyn" else 1)
         tyd = st.text_input("Tyd", data[7])
         dag = st.text_input("Dag", data[8])
 
@@ -178,25 +188,49 @@ if st.session_state.view == "class":
                     (name,inst,graad,groep,vak,aan,tyd,dag,cid)
                 )
             st.session_state.edit_mode = False
-            st.session_state.view = "classes"
             st.rerun()
 
     # ---------- STUDENTS ----------
-    if not is_new:
-        st.subheader("Students")
+    st.subheader("Students")
 
-        students = q("SELECT id,name FROM students WHERE class_id=?", (cid,))
-        for s in students:
-            row = st.columns([8,1])
-            row[0].write(s[1])
+    # Add Student button (always at top-right in edit mode)
+    if is_admin and st.session_state.edit_mode:
+        add_col = st.columns([6,1])
+        if add_col[1].button("➕ Add Student"):
+            st.session_state.add_student_active = True
 
-            if is_admin and st.session_state.edit_mode:
-                if row[1].button("🗑", key=f"sdel_{s[0]}"):
-                    st.session_state.confirm_delete = ("student", s[0])
+    # Student form
+    if is_admin and st.session_state.edit_mode and st.session_state.get("add_student_active", False):
+        with st.form("add_student_form", clear_on_submit=True):
+            n = st.text_input("Student Name", key="new_student_name")
+            submitted = st.form_submit_button("Add")
+            if submitted and n:
+                q("INSERT INTO students (class_id,name) VALUES (?,?)", (cid,n))
+                st.session_state.add_student_active = False
+                st.rerun()
 
+    # List students
+    students = q("SELECT id,name FROM students WHERE class_id=?", (cid,))
+    for s in students:
+        row = st.columns([8,1])
+        row[0].write(s[1])
         if is_admin and st.session_state.edit_mode:
-            with st.form("add_student"):
-                n = st.text_input("Student name")
-                if st.form_submit_button("Add"):
-                    q("INSERT INTO students (class_id,name) VALUES (?,?)", (cid,n))
-                    st.rerun()
+            if row[1].button("🗑", key=f"sdel_{s[0]}"):
+                st.session_state.confirm_delete = ("student", s[0])
+
+# ---------- DELETE CONFIRMATION ----------
+if st.session_state.confirm_delete:
+    t, cid = st.session_state.confirm_delete
+    st.warning(f"Are you sure you want to delete this {t}?")
+    c1, c2 = st.columns(2)
+    if c1.button("Yes, delete", key="confirm_yes"):
+        if t == "class":
+            q("DELETE FROM files WHERE id=?", (cid,))
+        else:
+            q("DELETE FROM students WHERE id=?", (cid,))
+        st.session_state.confirm_delete = None
+        st.rerun()
+    if c2.button("Cancel", key="confirm_no"):
+        st.session_state.confirm_delete = None
+        st.rerun()
+                  st.rerun()

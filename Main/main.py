@@ -183,9 +183,7 @@ if st.session_state.view == "class":
     is_new = cid is None
     is_admin = st.session_state.role == "admin"
 
-    data = [None]*9 if is_new else q(
-        "SELECT * FROM files WHERE id=?", (cid,)
-    )[0]
+    data = [None]*9 if is_new else q("SELECT * FROM files WHERE id=?", (cid,))[0]
 
     top = st.columns([6,1,1])
     top[0].subheader("New Class" if is_new else data[1])
@@ -216,15 +214,9 @@ if st.session_state.view == "class":
 
         if st.button("💾 Save"):
             if is_new:
-                q(
-                    "INSERT INTO files (name,instansie,graad,groep,vak,aanlyn,tyd,dag) VALUES (?,?,?,?,?,?,?,?)",
-                    (name,inst,graad,groep,vak,aan,tyd,dag)
-                )
+                q("INSERT INTO files (name,instansie,graad,groep,vak,aanlyn,tyd,dag) VALUES (?,?,?,?,?,?,?,?)",(name,inst,graad,groep,vak,aan,tyd,dag))
             else:
-                q(
-                    "UPDATE files SET name=?,instansie=?,graad=?,groep=?,vak=?,aanlyn=?,tyd=?,dag=? WHERE id=?",
-                    (name,inst,graad,groep,vak,aan,tyd,dag,cid)
-                )
+                q("UPDATE files SET name=?,instansie=?,graad=?,groep=?,vak=?,aanlyn=?,tyd=?,dag=? WHERE id=?",(name,inst,graad,groep,vak,aan,tyd,dag,cid))
             st.session_state.edit_mode = False
             st.rerun()
 

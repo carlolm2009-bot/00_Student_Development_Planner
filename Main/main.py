@@ -123,19 +123,6 @@ if st.session_state.view == "classes":
                 if cols[1].button("🗑", key=f"del_{c[0]}"):
                     st.session_state.confirm_delete = ("class", c[0])
 
-    # ---- DELETE CONFIRM ----
-    if st.session_state.confirm_delete:
-        t, cid = st.session_state.confirm_delete
-        st.warning("Are you sure you want to delete this class?")
-        c1, c2 = st.columns(2)
-        if c1.button("Yes, delete"):
-            q("DELETE FROM files WHERE id=?", (cid,))
-            st.session_state.confirm_delete = None
-            st.rerun()
-        if c2.button("Cancel"):
-            st.session_state.confirm_delete = None
-            st.rerun()
-
 # ======================================================
 # CLASS PAGE
 # ======================================================
@@ -150,6 +137,9 @@ if st.session_state.view == "class":
     # ---------- TOP BAR ----------
     top = st.columns([6,1,1])
     top[0].subheader("New Class" if is_new else "Class: " + (data[1] or ""))
+
+    if header[1].button("🔍"):
+        st.session_state.show_filters = not st.session_state.show_filters
     
     # Exit class button
     if top[2].button("❌ Exit Class"):
@@ -163,6 +153,31 @@ if st.session_state.view == "class":
         if top[1].button("✏️ Edit Class"):
             st.session_state.edit_mode = not st.session_state.edit_mode
             st.rerun()
+
+    # ---------- FILTERS ----------
+    if st.session_state.show_filters:
+        with st.container(border=True):
+            c = st.columns(7)
+            c[0].selectbox("Instansie", [GEEN]+get_distinct("instansie"), key="f_inst")
+            c[1].selectbox("Graad", [GEEN]+[str(i) for i in range(1,13)], key="f_graad")
+            c[2].selectbox("Groep", [GEEN]+list(range(1,11)), key="f_groep")
+            c[3].selectbox("Vak", [GEEN]+get_distinct("vak"), key="f_vak")
+            c[4].selectbox("Aanlyn", [GEEN]+get_distinct("aanlyn"), key="f_aanlyn")
+            c[5].selectbox("Tyd", [GEEN]+[f"{h:02d}:00" for h in range(7,19)], key="f_tyd")
+            c[6].selectbox("Dag", [GEEN,"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], key="f_dag")
+
+            if st.button("Apply filters"):
+                st.session_state.filters = {
+                    "instansie": st.session_state.f_inst,
+                    "graad": st.session_state.f_graad,
+                    "groep": st.session_state.f_groep,
+                    "vak": st.session_state.f_vak,
+                    "aanlyn": st.session_state.f_aanlyn,
+                    "tyd": st.session_state.f_tyd,
+                    "dag": st.session_state.f_dag,
+                }
+                st.session_state.show_filters = False
+                st.rerun()
 
     # ---------- CLASS DETAILS (EDIT MODE ONLY) ----------
     if is_admin and st.session_state.edit_mode:

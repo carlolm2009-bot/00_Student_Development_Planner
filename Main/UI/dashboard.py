@@ -1,5 +1,21 @@
 import streamlit as st
 import pandas as pd
+from ltl_pathfinder.services.student_service import create_student
+
+with st.expander("➕ Add new student"):
+    c1, c2 = st.columns(2)
+    first = c1.text_input("First name")
+    last = c2.text_input("Last name")
+    school = st.text_input("School")
+    grade = st.text_input("Grade")
+
+    if st.button("Save Student"):
+        if first and last:
+            create_student(first, last, school, grade)
+            st.success("Saved!")
+            st.rerun()  # IMPORTANT: refresh the page to reload JSON data
+        else:
+            st.error("First and last name are required.")
 
 # ----------------------------
 # Page config

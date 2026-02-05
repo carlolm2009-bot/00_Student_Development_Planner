@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from services.students import list_students, add_student
+from Services.students import list_students, add_student
 
 def render():
     st.title("LTL Pathfinder (Basic)")

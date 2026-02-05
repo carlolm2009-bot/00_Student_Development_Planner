@@ -1,48 +1,14 @@
-import sqlite3
+import json
+from pathlib import Path
 
-DB_NAME = "ltl.db"
+DATA_FILE = Path("data/data.json")
 
-# ======================================================
-# CONNECTION
-# ======================================================
-def get_connection():
-    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
-    return conn
+def load_data():
+    """Read JSON file -> Python dict"""
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-
-# ======================================================
-# INIT DATABASE
-# ======================================================
-def init_db():
-    conn = get_connection()
-    cur = conn.cursor()
-
-    # ---------- CLASSES ----------
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS files (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            instansie TEXT,
-            graad TEXT,
-            groep INTEGER,
-            vak TEXT,
-            aanlyn TEXT,
-            tyd TEXT,
-            dag TEXT
-        )
-    """)
-
-    # ---------- STUDENTS ----------
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS students (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            class_id INTEGER NOT NULL,
-            name TEXT NOT NULL,
-            FOREIGN KEY (class_id)
-                REFERENCES files(id)
-                ON DELETE CASCADE
-        )
-    """)
-
-    conn.commit()
-    conn.close()
+def save_data(data):
+    """Python dict -> write JSON file"""
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)

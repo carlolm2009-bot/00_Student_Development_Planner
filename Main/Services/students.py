@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from data.store import load_data, save_data
+from DataBase.Database import load_data, save_data
 
 def list_students():
     data = load_data()

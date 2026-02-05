@@ -1,25 +1,25 @@
-from 00_Student_Development_Planner.Database import load_data, save_data
-from datetime import datetime
 import uuid
+from datetime import datetime
+from data.store import load_data, save_data
 
 def list_students():
     data = load_data()
-    return data.get("students", [])
+    return data["students"]
 
-def create_student(first_name, last_name, school_name="", grade=""):
+def add_student(first_name, last_name, school="", grade=""):
     data = load_data()
 
-    new_student = {
+    student = {
         "id": str(uuid.uuid4()),
         "first_name": first_name.strip(),
         "last_name": last_name.strip(),
-        "school_name": school_name.strip(),
+        "school": school.strip(),
         "grade": grade.strip(),
-        "created_at": datetime.utcnow().isoformat(timespec="seconds") + "Z"
+        "created_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
     }
 
-    data["students"].append(new_student)
+    data["students"].append(student)
     save_data(data)
 
-    return new_student["id"]
+    return student["id"]
 

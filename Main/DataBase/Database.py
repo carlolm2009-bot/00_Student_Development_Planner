@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 DATA_FILE = Path("data/data.json")
-main.py
+#main.py
 def load_data():
     """Read JSON file -> Python dict"""
     if not DATA_FILE.exists():

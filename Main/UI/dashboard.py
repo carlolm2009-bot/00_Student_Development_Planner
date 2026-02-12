@@ -38,33 +38,7 @@ def render():
         st.button("Export")
 
     st.divider()
-
-    # ======================
-    # FILTER BAR
-    # ======================
-    f1, f2, f3, f4, f5 = st.columns(5)
-
-    f1.selectbox("Filter by class", ["All classes"])
-    f2.selectbox("Filter by subject", ["All subjects"])
-    f3.text_input("Search students", placeholder="Search by name...")
-    f4.selectbox("Filter by grade", ["All grades"])
-    f5.selectbox("Filter by school", ["All schools"])
-
-    st.button("Clear")
-
-    st.divider()
-
-    # ======================
-    # KPI CARDS
-    # ======================
-    students = list_students()
-    total_students = len(students)
-
-    k1, k2, k3 = st.columns(3)
-    k1.metric("Total Students", total_students)
-    k2.metric("This Month", total_students)
-    k3.metric("Recent Notes", "0 notes")
-
+    
     # ======================
     # ADD STUDENT FORM (TOGGLED)
     # ======================
@@ -95,6 +69,32 @@ def render():
                 st.rerun()
 
     st.divider()
+
+    # ======================
+    # FILTER BAR
+    # ======================
+    f1, f2, f3, f4, f5 = st.columns(5)
+
+    f1.selectbox("Filter by class", ["All classes"])
+    f2.selectbox("Filter by subject", ["All subjects"])
+    f3.text_input("Search students", placeholder="Search by name...")
+    f4.selectbox("Filter by grade", ["All grades"])
+    f5.selectbox("Filter by school", ["All schools"])
+
+    st.button("Clear")
+
+    st.divider()
+
+    # ======================
+    # KPI CARDS
+    # ======================
+    students = list_students()
+    total_students = len(students)
+
+    k1, k2, k3 = st.columns(3)
+    k1.metric("Total Students", total_students)
+    k2.metric("This Month", total_students)
+    k3.metric("Recent Notes", "0 notes")
 
     # ======================
     # STUDENTS TABLE

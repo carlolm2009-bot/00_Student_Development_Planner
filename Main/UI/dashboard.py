@@ -62,7 +62,7 @@ def render():
 
     k1, k2, k3 = st.columns(3)
     k1.metric("Total Students", total_students)
-    k2.metric("This Month", "0 students")
+    k2.metric("This Month", total_students)
     k3.metric("Recent Notes", "0 notes")
 
     # ======================

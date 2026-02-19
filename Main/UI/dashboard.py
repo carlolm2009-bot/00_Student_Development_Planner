@@ -118,9 +118,9 @@ def render():
         st.info("No students yet.")
         return
 
-    #df = pd.DataFrame(students)
+    df = pd.DataFrame(students)
 
-    #cols = ["first_name", "last_name", "school", "grade", "created_at"]
-    #df = df[[c for c in cols if c in df.columns]]
+    cols = ["first_name", "last_name", "school", "grade", "created_at"]
+    df = df[[c for c in cols if c in df.columns]]
 
-    #st.dataframe(df, use_container_width=True, hide_index=True)
+    st.dataframe(df, use_container_width=True, hide_index=True)

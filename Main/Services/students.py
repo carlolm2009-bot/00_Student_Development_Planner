@@ -23,3 +23,6 @@ def add_student(first_name, last_name, school="", grade=""):
 
     return student["id"]
 
+def filter_students():
+    data = load_data()
+    return data["students"]

@@ -73,8 +73,7 @@ def render():
     # ======================
     # FILTER BAR
     # ======================
-    f1, f2, f3, f4, f5 = st.columns(5)
-
+    
     st.divider()
 
     # Get all students once to build dropdown options

@@ -128,13 +128,14 @@ def render():
     if not students:
         st.info("No students found.")
     else:
-        c1, c2, c3, c4, c5, c6 = st.columns([1,2,2,2,2,2])
+        c1, c2, c3, c4, c5, c6, c7 = st.columns([1,2,2,2,2,2,1])
         c1.write("ID")
         c2.write('Name')
         c3.write("School")
         c4.write("Grade")
         c5.write("subject")
         c6.write("Class")
+        c7.write("")
         for student in students:
             c1, c2, c3, c4, c5, c6, c7 = st.columns([1,2,2,2,2,2,1])
 

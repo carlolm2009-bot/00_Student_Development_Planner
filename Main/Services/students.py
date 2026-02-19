@@ -6,7 +6,7 @@ def list_students():
     data = load_data()
     return data["students"]
 
-def add_student(first_name, last_name, school="", grade=""):
+def add_student(first_name, last_name, school="", grade="", subject="", clas=""):
     data = load_data()
 
     student = {
@@ -16,6 +16,8 @@ def add_student(first_name, last_name, school="", grade=""):
         "school": school.strip(),
         "grade": grade.strip(),
         "created_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "subject": subject.strip(),
+        "class": clas.strip(),
     }
 
     data["students"].append(student)
@@ -47,7 +49,7 @@ def filter_students(
     subject_filter=None,
     grade_filter=None,
     school_filter=None,
-    search_query=None
+    search_query=None,
 ):
     students = list_students()
 

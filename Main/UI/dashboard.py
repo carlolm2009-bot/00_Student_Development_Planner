@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from Services.students import list_students, add_student, filter_students
+from Services.students import list_students, add_student, filter_students, delete_student
 
 
 def render():
@@ -122,12 +122,21 @@ def render():
     st.subheader("Students")
 
     if not students:
-        st.info("No students yet.")
-        return
+        st.info("No students found.")
+    else:
+        for student in students:
+            c1, c2, c3, c4, c5, c6 = st.columns([1,2,2,2,2,1])
 
-    df = pd.DataFrame(students)
+            c1.write(student.get("id"))
+            c2.write(f"{student.get('first_name')} {student.get('last_name')}")
+            c3.write(student.get("school", ""))
+            c4.write(student.get("grade", ""))
+            c5.write(student.get("class", ""))
 
-    cols = ["first_name", "last_name", "school", "grade", "created_at"]
-    df = df[[c for c in cols if c in df.columns]]
-
-    st.dataframe(df, use_container_width=True, hide_index=True)
+            if c6.button("❌", key=f"delete_{student['id']}"):
+                success = delete_student(student["id"])
+                if success:
+                    st.success("Student deleted")
+                    st.rerun()
+                else:
+                    st.error("Student not found")

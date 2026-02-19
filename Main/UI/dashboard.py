@@ -101,7 +101,14 @@ def render():
     # ======================
     # KPI CARDS
     # ======================
-    students = list_students()
+    students = filter_students(
+    class_filter=class_filter,
+    subject_filter=subject_filter,
+    grade_filter=grade_filter,
+    school_filter=school_filter,
+    search_query=search_query
+)
+
     total_students = len(students)
 
     k1, k2, k3 = st.columns(3)

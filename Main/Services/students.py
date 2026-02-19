@@ -58,7 +58,7 @@ def filter_students(
 
         # Search filter
         if search_query:
-            if search_query.lower() != student.get('first_name').lower() or search_query.lower() != student.get('last_name').lower():
+            if search_query.lower() != student.get('first_name').lower() and search_query.lower() != student.get('last_name').lower():
                 continue
 
         filtered.append(student)

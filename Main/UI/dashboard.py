@@ -85,6 +85,28 @@ def render():
 
     st.divider()
 
+    # Get all students once to build dropdown options
+    all_students = list_students()
+
+    classes = sorted({s.get("class", "") for s in all_students if s.get("class")})
+    subjects = sorted({s.get("subject", "") for s in all_students if s.get("subject")})
+    grades = sorted({s.get("grade", "") for s in all_students if s.get("grade")})
+    schools = sorted({s.get("school", "") for s in all_students if s.get("school")})
+
+    f1, f2, f3, f4, f5 = st.columns(5)
+
+    class_filter = f1.selectbox("Filter by class", ["All classes"] + classes)
+    subject_filter = f2.selectbox("Filter by subject", ["All subjects"] + subjects)
+    search_query = f3.text_input("Search students", placeholder="Search by name...")
+    grade_filter = f4.selectbox("Filter by grade", ["All grades"] + grades)
+    school_filter = f5.selectbox("Filter by school", ["All schools"] + schools)
+
+    clear = st.button("Clear")
+
+    if clear:
+        st.rerun()
+
+
     # ======================
     # KPI CARDS
     # ======================
@@ -105,9 +127,9 @@ def render():
         st.info("No students yet.")
         return
 
-    df = pd.DataFrame(students)
+    #df = pd.DataFrame(students)
 
-    cols = ["first_name", "last_name", "school", "grade", "created_at"]
-    df = df[[c for c in cols if c in df.columns]]
+    #cols = ["first_name", "last_name", "school", "grade", "created_at"]
+    #df = df[[c for c in cols if c in df.columns]]
 
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    #st.dataframe(df, use_container_width=True, hide_index=True)

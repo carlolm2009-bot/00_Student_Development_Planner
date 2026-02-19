@@ -23,6 +23,25 @@ def add_student(first_name, last_name, school="", grade=""):
 
     return student["id"]
 
+def delete_student(student_id):
+    data = load_data()
+    students = data.get("students", [])
+
+    updated_students = [s for s in students if s.get("id") != student_id]
+
+    # If nothing changed, student didn't exist
+    if len(updated_students) == len(students):
+        return False
+
+    # Reassign IDs so they stay sequential
+    for index, student in enumerate(updated_students, start=1):
+        student["id"] = index
+
+    data["students"] = updated_students
+    save_data(data)
+
+    return True
+
 def filter_students(
     class_filter=None,
     subject_filter=None,

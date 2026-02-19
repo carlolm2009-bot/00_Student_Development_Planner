@@ -81,7 +81,6 @@ def render():
     
     st.divider()
 
-    # Get all students once to build dropdown options
     all_students = list_students()
 
     classes = sorted({s.get("class", "") for s in all_students if s.get("class")})

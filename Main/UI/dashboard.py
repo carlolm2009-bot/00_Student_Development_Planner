@@ -55,8 +55,12 @@ def render():
             school = c3.text_input("School")
             grade = c4.text_input("Grade")
 
-            c5, c6 = st.columns([1,1])
-            if c5.button("Save", type="primary"):
+            c5, c6 = st.columns(2)
+            school = c3.text_input("Subject")
+            grade = c4.text_input("Class")
+
+            c7, c8 = st.columns([1,1])
+            if c7.button("Save", type="primary"):
                 if not first.strip() or not last.strip():
                     st.error("First and last name are required.")
                 else:
@@ -65,7 +69,7 @@ def render():
                     st.session_state.show_add_form = False
                     st.rerun()
 
-            if c6.button("Cancel"):
+            if c8.button("Cancel"):
                 st.session_state.show_add_form = False
                 st.rerun()
 

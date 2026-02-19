@@ -75,14 +75,6 @@ def render():
     # ======================
     f1, f2, f3, f4, f5 = st.columns(5)
 
-    f1.selectbox("Filter by class", ["All classes"])
-    f2.selectbox("Filter by subject", ["All subjects"])
-    f3.text_input("Search students", placeholder="Search by name...")
-    f4.selectbox("Filter by grade", ["All grades"])
-    f5.selectbox("Filter by school", ["All schools"])
-
-    st.button("Clear")
-
     st.divider()
 
     # Get all students once to build dropdown options

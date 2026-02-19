@@ -119,6 +119,7 @@ def render():
     # ======================
     # STUDENTS TABLE
     # ======================
+    
     st.subheader("Students")
 
     if not students:

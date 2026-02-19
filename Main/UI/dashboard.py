@@ -91,17 +91,16 @@ def render():
 
     f1, f2, f3, f4, f5 = st.columns(5)
 
-    class_filter = f1.selectbox("Filter by class", ["All classes"] + classes)
-    subject_filter = f2.selectbox("Filter by subject", ["All subjects"] + subjects)
-    search_query = f3.text_input("Search students", placeholder="Search by name...")
-    grade_filter = f4.selectbox("Filter by grade", ["All grades"] + grades)
-    school_filter = f5.selectbox("Filter by school", ["All schools"] + schools)
-
+    search_query = f1.text_input("Search students", placeholder="Search by name...")
+    school_filter = f2.selectbox("Filter by school", ["All schools"] + schools)
+    grade_filter = f3.selectbox("Filter by grade", ["All grades"] + grades)
+    subject_filter = f4.selectbox("Filter by subject", ["All subjects"] + subjects)
+    class_filter = f5.selectbox("Filter by class", ["All classes"] + classes)
+    
     clear = st.button("Clear")
 
     if clear:
         st.rerun()
-
 
     # ======================
     # KPI CARDS
@@ -130,15 +129,22 @@ def render():
     if not students:
         st.info("No students found.")
     else:
+        c1, c2, c3, c4, c5, c6 = st.columns([1,2,2,2,2,2])
+        c1.write("ID")
+        c2.write('Name')
+        c3.write("School")
+        c4.write("Grade")
+        c5.write("subject")
+        c6.write("Class")
         for student in students:
             c1, c2, c3, c4, c5, c6, c7 = st.columns([1,2,2,2,2,2,1])
 
             c1.write(student.get("id"))
             c2.write(f"{student.get('first_name')} {student.get('last_name')}")
-            c3.write(student.get("subject", ""))
-            c4.write(student.get("class", ""))
-            c5.write(student.get("school", ""))
-            c6.write(student.get("grade", ""))
+            c3.write(student.get("school", ""))
+            c4.write(student.get("grade", ""))
+            c5.write(student.get("subject", ""))
+            c6.write(student.get("class", ""))
 
             if c7.button("❌", key=f"delete_{student['id']}"):
                 success = delete_student(student["id"])

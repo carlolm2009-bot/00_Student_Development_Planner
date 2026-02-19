@@ -42,6 +42,7 @@ def render():
     # ======================
     # ADD STUDENT FORM (TOGGLED)
     # ======================
+    
     if st.session_state.show_add_form:
         with st.container(border=True):
             st.subheader("Add Student")
@@ -126,15 +127,16 @@ def render():
         st.info("No students found.")
     else:
         for student in students:
-            c1, c2, c3, c4, c5, c6 = st.columns([1,2,2,2,2,1])
+            c1, c2, c3, c4, c5, c6, c7, c8 = st.columns([1,2,2,2,2,2,1])
 
             c1.write(student.get("id"))
             c2.write(f"{student.get('first_name')} {student.get('last_name')}")
-            c3.write(student.get("school", ""))
-            c4.write(student.get("grade", ""))
-            c5.write(student.get("class", ""))
+            c3.write(student.get("subject", ""))
+            c4.write(student.get("class", ""))
+            c5.write(student.get("school", ""))
+            c6.write(student.get("grade", ""))
 
-            if c6.button("❌", key=f"delete_{student['id']}"):
+            if c7.button("❌", key=f"delete_{student['id']}"):
                 success = delete_student(student["id"])
                 if success:
                     st.success("Student deleted")

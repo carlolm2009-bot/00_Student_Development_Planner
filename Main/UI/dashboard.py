@@ -97,6 +97,11 @@ def render():
     clear = st.button("Clear")
 
     if clear:
+        search_query = f1.text_input("Search students", placeholder="Search by name...")
+        school_filter = f2.selectbox("Filter by school", ["All schools"] + schools)
+        grade_filter = f3.selectbox("Filter by grade", ["All grades"] + grades)
+        subject_filter = f4.selectbox("Filter by subject", ["All subjects"] + subjects)
+        class_filter = f5.selectbox("Filter by class", ["All classes"] + classes)
         st.rerun()
 
     # ======================

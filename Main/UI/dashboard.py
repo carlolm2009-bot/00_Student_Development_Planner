@@ -105,8 +105,8 @@ def render():
             "class_filter": "All classes",
         }
 
-        for key, value in defaults.items():
-            st.session_state[key] = value
+        """for key, value in defaults.items():
+            st.session_state[key] = value"""
 
     st.rerun()
 

@@ -88,20 +88,20 @@ def render():
 
     f1, f2, f3, f4, f5 = st.columns(5)
 
-    search_query = f1.text_input("Search students", placeholder="Search by name...",key=search_query)
-    school_filter = f2.selectbox("Filter by school", ["All schools"] + schools,key=school_filter)
-    grade_filter = f3.selectbox("Filter by grade", ["All grades"] + grades,key=grade_filter)
-    subject_filter = f4.selectbox("Filter by subject", ["All subjects"] + subjects,key=subject_filter)
-    class_filter = f5.selectbox("Filter by class", ["All classes"] + classes,key=class_filter)
+    search_query = f1.text_input("Search students", placeholder="Search by name...",key="search_query")
+    school_filter = f2.selectbox("Filter by school", ["All schools"] + schools,key="school_filter")
+    grade_filter = f3.selectbox("Filter by grade", ["All grades"] + grades,key="grade_filter")
+    subject_filter = f4.selectbox("Filter by subject", ["All subjects"] + subjects,key="subject_filter")
+    class_filter = f5.selectbox("Filter by class", ["All classes"] + classes,key="class_filter")
     
     clear = st.button("Clear")
 
     if clear:
-    defaults = {
-        "search_query": "",
-        "school_filter": "All schools",
-        "grade_filter": "All grades",
-        "subject_filter": "All subjects",
+        defaults = {
+            "search_query": "",
+            "school_filter": "All schools",
+            "grade_filter": "All grades",
+            "subject_filter": "All subjects",
         "class_filter": "All classes",
     }
 

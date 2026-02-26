@@ -88,16 +88,20 @@ def render():
 
     f1, f2, f3, f4, f5 = st.columns(5)
 
-    search_query = f1.text_input("Search students", placeholder="Search by name...")
-    school_filter = f2.selectbox("Filter by school", ["All schools"] + schools)
-    grade_filter = f3.selectbox("Filter by grade", ["All grades"] + grades)
-    subject_filter = f4.selectbox("Filter by subject", ["All subjects"] + subjects)
-    class_filter = f5.selectbox("Filter by class", ["All classes"] + classes)
+    search_query = f1.text_input("Search students", placeholder="Search by name...",key=search_query)
+    school_filter = f2.selectbox("Filter by school", ["All schools"] + schools,key=school_filter)
+    grade_filter = f3.selectbox("Filter by grade", ["All grades"] + grades,key=grade_filter)
+    subject_filter = f4.selectbox("Filter by subject", ["All subjects"] + subjects,key=subject_filter)
+    class_filter = f5.selectbox("Filter by class", ["All classes"] + classes,key=class_filter)
     
     clear = st.button("Clear")
 
     if clear:
-        f1.reset()
+        st.session_state.search_query = ""
+        st.session_state.school_filter = "All schools"
+        st.session_state.grade_filter = "All grades"
+        st.session_state.subject_filter = "All subjects"
+        st.session_state.class_filter = "All classes"
         st.rerun()
 
     # ======================

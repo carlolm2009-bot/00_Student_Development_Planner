@@ -93,12 +93,13 @@ def render():
     grade_filter = f3.selectbox("Filter by grade", ["All grades"] + grades,key="grade_filter")
     subject_filter = f4.selectbox("Filter by subject", ["All subjects"] + subjects,key="subject_filter")
     class_filter = f5.selectbox("Filter by class", ["All classes"] + classes,key="class_filter")
-    
-    clear = st.button("Clear")
 
-    if clear:
-       st.session_state.search_query = "Search by name..."
-       st.session_state.school_filter = "All schools"
+    if st.button("Clear"):
+        st.session_state.search_query = "Search by name..."
+        st.session_state.school_filter = "All schools"
+        st.session_state.grade_filter = "All grades"
+        st.session_state.subject_filter = "All subjects"
+        st.session_state.class_filter = "All classes"
 
     st.rerun()
 

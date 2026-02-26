@@ -73,8 +73,6 @@ def render():
                 st.session_state.show_add_form = False
                 st.rerun()
 
-    st.divider()
-
     # ======================
     # FILTER BAR
     # ======================

@@ -103,10 +103,10 @@ def render():
             "grade_filter": "All grades",
             "subject_filter": "All subjects",
             "class_filter": "All classes",
-    }
+        }
 
-    for key, value in defaults.items():
-        st.session_state[key] = value
+        for key, value in defaults.items():
+            st.session_state[key] = value
 
     st.rerun()
 

@@ -97,16 +97,8 @@ def render():
     clear = st.button("Clear")
 
     if clear:
-        defaults = {
-            "search_query": "",
-            "school_filter": "All schools",
-            "grade_filter": "All grades",
-            "subject_filter": "All subjects",
-            "class_filter": "All classes",
-        }
-
-        for key, value in defaults.items():
-            st.session_state[key] = value
+       st.session_state.search_query = "Search by name..."
+       st.session_state.school_filter = "All schools"
 
     st.rerun()
 

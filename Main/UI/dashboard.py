@@ -3,7 +3,7 @@ import pandas as pd
 from Services.students import list_students, add_student, filter_students, delete_student
 
 
-def render():
+def render(): 
     st.title("LTL Pathfinder")
 
     # -----------------------

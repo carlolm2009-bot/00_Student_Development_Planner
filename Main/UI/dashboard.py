@@ -102,7 +102,7 @@ def render():
             "school_filter": "All schools",
             "grade_filter": "All grades",
             "subject_filter": "All subjects",
-        "class_filter": "All classes",
+            "class_filter": "All classes",
     }
 
     for key, value in defaults.items():

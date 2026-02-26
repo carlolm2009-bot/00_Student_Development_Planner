@@ -97,12 +97,18 @@ def render():
     clear = st.button("Clear")
 
     if clear:
-        st.session_state.search_query = ""
-        st.session_state.school_filter = "All schools"
-        st.session_state.grade_filter = "All grades"
-        st.session_state.subject_filter = "All subjects"
-        st.session_state.class_filter = "All classes"
-        st.rerun()
+    defaults = {
+        "search_query": "",
+        "school_filter": "All schools",
+        "grade_filter": "All grades",
+        "subject_filter": "All subjects",
+        "class_filter": "All classes",
+    }
+
+    for key, value in defaults.items():
+        st.session_state[key] = value
+
+    st.rerun()
 
     # ======================
     # KPI CARDS
